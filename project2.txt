@@ -1,0 +1,75 @@
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+public class Wordcount 
+{
+    public static void main(String[] args) 
+    {
+        Scanner scanner = new Scanner(System.in);
+        int choose;
+        do{
+            System.out.println("Type 1 For Enter text");
+            System.out.println("Type 2 For count the words from the file");
+            System.out.println("Type 3 For exiting program");
+            choose = scanner.nextInt();
+            scanner.nextLine();  
+
+            switch (choose)
+            {
+                case 1:
+                    System.out.println("Enter the text");
+                    String Text = scanner.nextLine();
+                    int count = Words_Count(Text);
+                    System.out.println("Total number of words are " + count);
+                    break;
+                case 2:
+                    String Path = "C:\\Users\\hp\\Desktop\\New Text Document.txt";
+                    try 
+                    {
+                        String file = readFile(Path);
+                        int tc = Words_Count(file);
+                        System.out.println("Total number of words are " + tc);
+                    }
+                    catch (FileNotFoundException e) 
+                    {
+                        System.out.println("File not found");
+                    }
+                    break;
+                case 3:
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid");
+            }
+        }while(choose!=3);
+    }
+
+    public static String readFile(String Path) throws FileNotFoundException 
+    {
+        StringBuilder st = new StringBuilder();
+        Scanner ft = new Scanner(new File(Path));
+
+        while (ft.hasNextLine()) 
+        {
+            st.append(ft.nextLine()).append("\n");
+        }
+        ft.close();
+        return st.toString();
+    }
+
+    public static int Words_Count(String text) 
+    {
+        String[] words = text.split("\\s+|\\p{Punct}");
+        int WordsCount = 0;
+
+        for (String word : words) 
+        {
+            if (!word.isEmpty()) 
+            {
+                WordsCount++;
+            }
+        }
+
+        return WordsCount;
+    }
+}
